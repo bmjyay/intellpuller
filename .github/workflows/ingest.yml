@@ -1,0 +1,30 @@
+name: Scheduled ingestion
+
+# Hits the deployed app's /api/ingest endpoint so new research gets pulled
+# and curated even when nobody's actively using the tool. Requires the app
+# to already be deployed somewhere reachable, with its database living on
+# that deployment (not in this CI runner).
+#
+# Repo secrets required:
+#   APP_URL       e.g. https://intellpuller.your-internal-host.example
+#   INGEST_TOKEN  must match the deployed app's INGEST_TOKEN env var
+#                 (omit this secret, and drop the Authorization header
+#                 below, if you left INGEST_TOKEN unset on the server)
+
+on:
+  schedule:
+    - cron: "0 13 * * *" # daily, 13:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger ingestion
+        run: |
+          curl -sS -X POST "${APP_URL%/}/api/ingest" \
+            -H "Authorization: Bearer ${INGEST_TOKEN}" \
+            --fail-with-body
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}

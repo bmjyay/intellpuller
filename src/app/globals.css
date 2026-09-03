@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: #fafaf8;
+  color: #16171d;
+}
+
+::selection {
+  background-color: #dbeafe;
+}
+
+@layer components {
+  .input {
+    @apply rounded-md border border-slate-300 px-3 py-1.5 text-sm outline-none focus:border-ink;
+  }
+}
