@@ -36,9 +36,10 @@ actually in the corpus.
 - **Anthropic API** for curation (summarizing, tagging, scoring), for
   extracting metadata out of arbitrary article HTML when you add a URL by
   hand, and for the brief/citation assistant.
-- **Fonts/colors**: Andus Labs brand -- Syne (display) + Archivo (body) via
-  `next/font/google`, and the brand palette (Old Lace / Violet / Zaffre /
-  Periwinkle / Cinerous / Tropical Indigo / Orange) as Tailwind tokens in
+- **Fonts/colors**: Times New Roman throughout (a system font, set in
+  `tailwind.config.ts` and `globals.css` -- no font download needed), and
+  the Andus Labs brand palette (Old Lace / Violet / Zaffre / Periwinkle /
+  Cinerous / Tropical Indigo / Orange) as Tailwind tokens in
   `tailwind.config.ts` (`brand-bg`, `brand-ink`, `brand-primary`,
   `brand-accent`, `brand-periwinkle`, `brand-muted`, `brand-cta`).
 

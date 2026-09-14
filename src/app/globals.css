@@ -9,13 +9,7 @@ html {
 body {
   background-color: #faf5ea; /* Old Lace */
   color: #1a064b; /* Violet */
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-syne), system-ui, sans-serif;
+  font-family: "Times New Roman", Times, Georgia, serif;
 }
 
 ::selection {
