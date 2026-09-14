@@ -9,7 +9,7 @@ export default async function Header() {
     <header className="border-b border-brand-muted/20 bg-white">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
         <Link href="/" className="flex items-baseline gap-2.5">
-          <span className="text-xl font-bold tracking-tight text-brand-ink">Intepreter</span>
+          <span className="text-xl font-bold tracking-tight text-brand-ink">Intelpreter</span>
           <span className="text-xs italic text-brand-muted">AI research &amp; insight feed</span>
         </Link>
         <nav className="flex flex-wrap items-center gap-0.5 text-sm">

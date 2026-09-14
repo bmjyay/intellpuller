@@ -1,4 +1,4 @@
-# Intepreter
+# Intelpreter
 
 Internal tool that automates finding exceptional AI research and news --
 pulls it, curates it, interprets it into a digestible brief -- and surfaces

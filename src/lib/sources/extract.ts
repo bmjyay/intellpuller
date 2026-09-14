@@ -5,7 +5,7 @@ import type { Candidate } from "./types";
 // to the LLM for metadata extraction + summarization. This is the fallback
 // path for sources that don't have a structured feed.
 export async function fetchUrlAsText(url: string): Promise<Pick<Candidate, "url" | "rawExcerpt">> {
-  const res = await fetch(url, { headers: { "User-Agent": "intepreter/0.1 (internal research tool)" } });
+  const res = await fetch(url, { headers: { "User-Agent": "intelpreter/0.1 (internal research tool)" } });
   if (!res.ok) {
     throw new Error(`Failed to fetch ${url}: ${res.status} ${res.statusText}`);
   }
