@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { Domain, SourceKind, EntryStatus } from "../src/lib/enums";
-
-const prisma = new PrismaClient();
+import { prisma } from "../src/lib/db";
 
 // The credible outlets we know how to pull from automatically, plus a
 // couple of "manual" sources for outlets without a usable feed (Wharton,

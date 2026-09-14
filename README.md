@@ -91,6 +91,13 @@ npm run db:seed           # loads the example entries this repo ships with
 npm run dev                # http://localhost:3000
 ```
 
+If `DATABASE_URL` isn't set at all (no `.env`, forgot step 2, or a fresh
+environment that doesn't carry dotfiles), `src/lib/db.ts` falls back to
+the same `file:./dev.db` default rather than crashing every page --
+curation/extraction still need `ANTHROPIC_API_KEY` set for anything past
+browsing, though, and you still need `db:push` run at least once so the
+database file actually has tables in it.
+
 The seed data includes the set of entries used to calibrate curation
 quality (Sycophantic AI / Science, NBER's Explainable AI and Knowledge
 Collapse papers, the Berkeley Haas/HBR ethnography, Anthropic's Economic
