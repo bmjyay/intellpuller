@@ -17,8 +17,12 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-syne)", "system-ui", "sans-serif"],
-        sans: ["var(--font-archivo)", "system-ui", "sans-serif"],
+        // Times New Roman throughout -- it's a system font (no next/font
+        // needed), with the usual serif fallbacks for machines that don't
+        // have it installed.
+        serif: ['"Times New Roman"', "Times", "Georgia", "serif"],
+        sans: ['"Times New Roman"', "Times", "Georgia", "serif"],
+        display: ['"Times New Roman"', "Times", "Georgia", "serif"],
       },
     },
   },

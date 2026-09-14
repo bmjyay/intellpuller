@@ -8,11 +8,11 @@ export default async function Header() {
   return (
     <header className="border-b border-brand-muted/20 bg-white">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
-        <Link href="/" className="flex items-baseline gap-2">
-          <span className="font-display text-lg font-bold tracking-tight text-brand-ink">Intepreter</span>
-          <span className="text-xs text-brand-muted">AI research &amp; insight feed</span>
+        <Link href="/" className="flex items-baseline gap-2.5">
+          <span className="text-xl font-bold tracking-tight text-brand-ink">Intepreter</span>
+          <span className="text-xs italic text-brand-muted">AI research &amp; insight feed</span>
         </Link>
-        <nav className="flex flex-wrap items-center gap-1 text-sm">
+        <nav className="flex flex-wrap items-center gap-0.5 text-sm">
           <NavLink href="/">Dashboard</NavLink>
           <NavLink href="/review">
             Review queue{pendingCount > 0 ? ` (${pendingCount})` : ""}
