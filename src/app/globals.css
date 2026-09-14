@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: #faf5ea; /* Old Lace */
+  color: #1a064b; /* Violet */
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-syne), system-ui, sans-serif;
+}
+
+::selection {
+  background-color: #dcd6f7; /* Periwinkle */
+}
+
+@layer components {
+  .input {
+    @apply rounded-md border border-brand-muted/30 bg-white px-3 py-1.5 text-sm text-brand-ink outline-none focus:border-brand-accent;
+  }
+}

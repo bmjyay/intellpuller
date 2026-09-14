@@ -1,0 +1,74 @@
+// Intepreter data model
+//
+// Entry   = one piece of curated research/news (a paper, report, or article).
+// Source  = a credible outlet or feed we pull from (arXiv, NBER, a lab blog, ...).
+// Pattern = a recurring named phenomenon an entry illustrates (e.g. "Knowledge
+//           Collapse", "Fluency Divide") -- lets the team cluster findings that
+//           are conceptually related even when they come from different orgs.
+//
+// SQLite has no native enum type, so `domain`, `status`, and `kind` below
+// are plain strings; the allowed values live as TS unions in
+// src/lib/enums.ts and are validated there on every write path.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Source {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  kind       String // ARXIV | RSS | MANUAL -- see src/lib/enums.ts
+  org        String?
+  // For RSS: the feed URL. For arXiv: an export.arxiv.org query string.
+  feedUrl    String?
+  arxivQuery String?
+  credible   Boolean  @default(true)
+  active     Boolean  @default(true)
+  notes      String?
+  createdAt  DateTime @default(now())
+  entries    Entry[]
+}
+
+model Pattern {
+  id      String  @id @default(cuid())
+  name    String  @unique
+  summary String?
+  entries Entry[]
+}
+
+model Entry {
+  id           String    @id @default(cuid())
+  title        String
+  url          String    @unique
+  authors      String? // free-text, e.g. "Myra Cheng, Cinoo Lee, et al."
+  org          String? // e.g. "Stanford", "NBER", "Google DeepMind"
+  publication  String? // e.g. "Science", "NBER Working Paper", "arXiv", "HBR"
+  publishedAt  DateTime?
+  domain       String    @default("OTHER") // see src/lib/enums.ts Domain
+  finding      String // the 1-2 sentence core finding
+  whyItMatters String? // optional editorial context on relevance
+  status       String    @default("PENDING") // see src/lib/enums.ts EntryStatus
+  qualityScore Int? // 1-5, from LLM curation or human override
+  credibleFlag Boolean   @default(true) // did curation judge the source/claim credible
+  addedBy      String? // "automation" or a team member's identifier
+  reviewedBy   String?
+  reviewedAt   DateTime?
+  rawExcerpt   String? // abstract/snippet as originally fetched, for audit
+  sourceId     String?
+  source       Source?   @relation(fields: [sourceId], references: [id])
+  patterns     Pattern[]
+  liked        Boolean   @default(false) // starred into the "liked" pile
+  usedAt       DateTime? // set when someone crosses this off as already used in a brief
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([domain])
+  @@index([status])
+  @@index([publishedAt])
+  @@index([liked])
+}
