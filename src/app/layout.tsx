@@ -3,7 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 
 export const metadata: Metadata = {
-  title: "Intepreter",
+  title: "Intelpreter",
   description: "Internal feed of exceptional AI research and insight.",
 };
 

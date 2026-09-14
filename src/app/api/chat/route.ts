@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     })
     .join("\n\n");
 
-  const systemPrompt = `You are the brief-writing and citation assistant for Intepreter, an internal tool that \
+  const systemPrompt = `You are the brief-writing and citation assistant for Intelpreter, an internal tool that \
 tracks exceptional AI research and reporting for the team. You help draft briefs, summaries, and talking \
 points, and you help find/format citations.
 
