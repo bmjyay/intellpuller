@@ -2,7 +2,7 @@ import Parser from "rss-parser";
 import type { Candidate } from "./types";
 
 const parser = new Parser({
-  headers: { "User-Agent": "intellpuller/0.1 (internal research tool)" },
+  headers: { "User-Agent": "intepreter/0.1 (internal research tool)" },
 });
 
 // Generic RSS/Atom fetcher, used for NBER's "new papers" feed as well as

@@ -1,4 +1,4 @@
-// intellpuller data model
+// Intepreter data model
 //
 // Entry   = one piece of curated research/news (a paper, report, or article).
 // Source  = a credible outlet or feed we pull from (arXiv, NBER, a lab blog, ...).
@@ -62,10 +62,13 @@ model Entry {
   sourceId     String?
   source       Source?   @relation(fields: [sourceId], references: [id])
   patterns     Pattern[]
+  liked        Boolean   @default(false) // starred into the "liked" pile
+  usedAt       DateTime? // set when someone crosses this off as already used in a brief
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
   @@index([domain])
   @@index([status])
   @@index([publishedAt])
+  @@index([liked])
 }

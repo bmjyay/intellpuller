@@ -1,5 +1,5 @@
 {
-  "name": "intellpuller",
+  "name": "intepreter",
   "version": "0.1.0",
   "private": true,
   "description": "Internal tool that pulls, curates, and surfaces exceptional AI research and news from credible sources.",

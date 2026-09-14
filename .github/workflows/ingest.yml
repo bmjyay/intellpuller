@@ -6,7 +6,7 @@ name: Scheduled ingestion
 # that deployment (not in this CI runner).
 #
 # Repo secrets required:
-#   APP_URL       e.g. https://intellpuller.your-internal-host.example
+#   APP_URL       e.g. https://intepreter.your-internal-host.example
 #   INGEST_TOKEN  must match the deployed app's INGEST_TOKEN env var
 #                 (omit this secret, and drop the Authorization header
 #                 below, if you left INGEST_TOKEN unset on the server)

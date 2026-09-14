@@ -8,12 +8,15 @@ export const DOMAIN_LABELS: Record<Domain, string> = {
   OTHER: "Other",
 };
 
+// Kept inside the Andus Labs palette: each domain gets a distinct tint/text
+// pairing built from the same handful of brand colors rather than reaching
+// for arbitrary Tailwind hues.
 export const DOMAIN_COLORS: Record<Domain, string> = {
-  TRUST_BEHAVIOR: "bg-violet-100 text-violet-800 border-violet-200",
-  COGNITION_LABOR: "bg-amber-100 text-amber-800 border-amber-200",
-  LABOR_ECONOMY: "bg-emerald-100 text-emerald-800 border-emerald-200",
-  SECURITY_RISK: "bg-rose-100 text-rose-800 border-rose-200",
-  OTHER: "bg-slate-100 text-slate-700 border-slate-200",
+  TRUST_BEHAVIOR: "bg-brand-periwinkle/50 text-brand-ink border-brand-accent/40",
+  COGNITION_LABOR: "bg-brand-cta/10 text-brand-cta border-brand-cta/30",
+  LABOR_ECONOMY: "bg-brand-primary/10 text-brand-primary border-brand-primary/30",
+  SECURITY_RISK: "bg-brand-ink/10 text-brand-ink border-brand-ink/30",
+  OTHER: "bg-brand-muted/10 text-brand-muted border-brand-muted/30",
 };
 
 export const ALL_DOMAINS = Object.keys(DOMAIN_LABELS) as Domain[];

@@ -1,42 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@prisma/client";
-import { Domain, EntryStatus } from "@/lib/enums";
+import { EntryStatus } from "@/lib/enums";
 import { prisma } from "@/lib/db";
 import { curateCandidate } from "@/lib/curate";
 import { fetchUrlAsText } from "@/lib/sources/extract";
-import { ALL_DOMAINS } from "@/lib/domains";
+import { buildEntryWhere } from "@/lib/entryQuery";
 
 export const dynamic = "force-dynamic";
 
-// GET /api/entries?domain=&status=&q=&pattern=&sort=recent|score
+// GET /api/entries?domain=&status=&q=&pattern=&sort=recent|score&liked=true&used=hide|only
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
-  const domain = params.get("domain");
-  const status = params.get("status") ?? EntryStatus.APPROVED;
-  const q = params.get("q");
-  const pattern = params.get("pattern");
   const sort = params.get("sort") ?? "recent";
 
-  const where: Prisma.EntryWhereInput = {};
-
-  if (status !== "ALL") {
-    where.status = status as EntryStatus;
-  }
-  if (domain && ALL_DOMAINS.includes(domain as Domain)) {
-    where.domain = domain as Domain;
-  }
-  if (pattern) {
-    where.patterns = { some: { name: pattern } };
-  }
-  if (q) {
-    where.OR = [
-      { title: { contains: q } },
-      { finding: { contains: q } },
-      { whyItMatters: { contains: q } },
-      { authors: { contains: q } },
-      { org: { contains: q } },
-    ];
-  }
+  const where = buildEntryWhere({
+    status: params.get("status") ?? EntryStatus.APPROVED,
+    domain: params.get("domain") ?? undefined,
+    pattern: params.get("pattern") ?? undefined,
+    q: params.get("q") ?? undefined,
+    liked: params.get("liked") === "true",
+    used: (params.get("used") as "hide" | "only" | null) ?? undefined,
+  });
 
   const orderBy: Prisma.EntryOrderByWithRelationInput =
     sort === "score" ? { qualityScore: "desc" } : { publishedAt: "desc" };

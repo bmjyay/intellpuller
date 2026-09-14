@@ -12,7 +12,7 @@ type ArxivOptions = {
 export async function fetchArxiv({ query, maxResults = 20 }: ArxivOptions): Promise<Candidate[]> {
   const url = `${ARXIV_API}?search_query=${query}&sortBy=submittedDate&sortOrder=descending&max_results=${maxResults}`;
 
-  const res = await fetch(url, { headers: { "User-Agent": "intellpuller/0.1 (internal research tool)" } });
+  const res = await fetch(url, { headers: { "User-Agent": "intepreter/0.1 (internal research tool)" } });
   if (!res.ok) {
     throw new Error(`arXiv query failed: ${res.status} ${res.statusText}`);
   }

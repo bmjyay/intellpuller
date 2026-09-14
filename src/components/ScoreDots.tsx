@@ -5,7 +5,7 @@ export default function ScoreDots({ score }: { score?: number | null }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <span
           key={i}
-          className={`h-1.5 w-1.5 rounded-full ${i < score ? "bg-ink" : "bg-slate-200"}`}
+          className={`h-1.5 w-1.5 rounded-full ${i < score ? "bg-brand-ink" : "bg-brand-periwinkle"}`}
         />
       ))}
     </span>

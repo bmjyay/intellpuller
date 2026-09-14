@@ -39,6 +39,10 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
   if (typeof body.domain === "string" && ALL_DOMAINS.includes(body.domain as Domain)) data.domain = body.domain;
   if (typeof body.qualityScore === "number") data.qualityScore = Math.max(1, Math.min(5, Math.round(body.qualityScore)));
   if (typeof body.credibleFlag === "boolean") data.credibleFlag = body.credibleFlag;
+  if (typeof body.liked === "boolean") data.liked = body.liked;
+  // `used` is a write-only convenience over the usedAt timestamp: true sets
+  // it to now (if not already set), false clears it.
+  if (typeof body.used === "boolean") data.usedAt = body.used ? existing.usedAt ?? new Date() : null;
 
   if (typeof body.status === "string" && body.status in EntryStatus) {
     data.status = body.status;

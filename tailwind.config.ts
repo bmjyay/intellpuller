@@ -5,8 +5,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#12131a",
-        paper: "#fafaf8",
+        // Andus Labs brand palette (Cheat Sheet: Brand Summary for Fonts & Colors)
+        brand: {
+          bg: "#FAF5EA", // Old Lace -- page background
+          ink: "#1A064B", // Violet -- headings/primary text
+          primary: "#0C1D98", // Zaffre -- primary actions/links
+          accent: "#7884FF", // Tropical Indigo -- interactive accents, toggles, focus
+          periwinkle: "#DCD6F7", // light accent surface
+          muted: "#AA988F", // Cinerous -- secondary text, hairlines
+          cta: "#FF4F01", // Orange -- high-emphasis CTA / alerts
+        },
+      },
+      fontFamily: {
+        display: ["var(--font-syne)", "system-ui", "sans-serif"],
+        sans: ["var(--font-archivo)", "system-ui", "sans-serif"],
       },
     },
   },
