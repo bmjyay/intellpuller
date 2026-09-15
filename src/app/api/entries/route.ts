@@ -86,6 +86,7 @@ export async function POST(req: NextRequest) {
       publication: curation.publication,
       domain: curation.domain,
       finding: curation.finding,
+      twist: curation.twist,
       whyItMatters: curation.whyItMatters,
       status,
       qualityScore: curation.qualityScore,

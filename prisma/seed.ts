@@ -103,6 +103,7 @@ type SeedEntry = {
   publishedAt?: string;
   domain: Domain;
   finding: string;
+  twist?: string;
   whyItMatters?: string;
   status?: EntryStatus;
   qualityScore?: number;
@@ -187,7 +188,8 @@ const entries: SeedEntry[] = [
     publishedAt: "2026-06-01",
     domain: Domain.LABOR_ECONOMY,
     finding:
-      "Tracks when and how people use Claude against work rhythms; an 81,000-person survey finds heavy AI delegators report higher satisfaction and optimism about pay/security, while early-career workers are more anxious.",
+      "Tracks when and how people use Claude against work rhythms; an 81,000-person survey finds heavy AI delegators report higher satisfaction and optimism about pay/security.",
+    twist: "Early-career workers report the opposite: more anxiety, not less, from the same shift.",
     whyItMatters:
       "Newer than the March 2026 Learning Curves report already on file -- consider replacing or pairing.",
     status: EntryStatus.APPROVED,

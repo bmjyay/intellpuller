@@ -32,6 +32,7 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
 
   if (typeof body.title === "string") data.title = body.title;
   if (typeof body.finding === "string") data.finding = body.finding;
+  if (typeof body.twist === "string" || body.twist === null) data.twist = body.twist;
   if (typeof body.whyItMatters === "string" || body.whyItMatters === null) data.whyItMatters = body.whyItMatters;
   if (typeof body.authors === "string") data.authors = body.authors;
   if (typeof body.org === "string") data.org = body.org;

@@ -48,14 +48,20 @@ actually in the corpus.
 
 ### Card design
 
-Entry cards are an editorial layout, not a generic list item: a dark
+Entry cards are an editorial layout, not a generic list item: a navy
 header band (title, eyebrow domain label, byline, like/used toggles) over
-a white body (finding, "why it matters," patterns, a "Read the full
-brief" link to the entry's detail page) and a footer bar linking out to
-the original source. The large serif numerals (small inline + a faint
-watermark in the header) are just the card's position in the current
-list -- a layout flourish, not real data -- so don't read anything into
-the specific number.
+a white body (the finding, then a "Read the full brief" toggle) and a
+footer bar linking out to the original source. Patterns/quality score
+still show on the entry detail page -- just not on the card face, to keep
+it clean.
+
+"Read the full brief" expands **twist** and **why it matters** inline
+(no navigation) when curation found either; "Close" collapses it back.
+If an entry has neither, the same button just links to its detail page
+instead. `twist` is an optional one-sentence complication/caveat on the
+finding (curation is instructed to only fill it in when the source
+actually describes one, never invent one to fill the field) -- see
+`src/lib/curate.ts`.
 
 ### Why mutations are plain `fetch`, not Server Actions
 
@@ -72,7 +78,8 @@ shows a real error message if a request does fail.
 ## Data model
 
 - `Entry` -- one paper/article: title, authors, org, publication, domain,
-  finding, optional "why it matters" note, status (`PENDING` / `APPROVED`
+  finding, optional `twist` (a complicating nuance) and "why it matters"
+  note, status (`PENDING` / `APPROVED`
   / `REJECTED` / `ARCHIVED`), quality score, `liked` flag, `usedAt`
   timestamp, and the raw excerpt it was curated from (kept for audit).
 - `Source` -- a credible outlet: an arXiv query, an RSS feed, or a

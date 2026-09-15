@@ -57,6 +57,7 @@ export default async function EntryDetailPage({ params }: { params: Promise<{ id
         domain={entry.domain}
         qualityScore={entry.qualityScore ?? ""}
         finding={entry.finding}
+        twist={entry.twist ?? ""}
         whyItMatters={entry.whyItMatters ?? ""}
       />
 
