@@ -48,20 +48,23 @@ actually in the corpus.
 
 ### Card design
 
-Entry cards are an editorial layout, not a generic list item: a navy
-header band (title, eyebrow domain label, byline, like/used toggles) over
-a white body (the finding, then a "Read the full brief" toggle) and a
-footer bar linking out to the original source. Patterns/quality score
-still show on the entry detail page -- just not on the card face, to keep
-it clean.
+Entry cards read like a journal offprint, not a generic list item: a dark
+navy header (eyebrow domain label, like/used toggles, title in Cormorant
+Garamond, byline) over a white body set in Lora -- a drop-capped finding,
+then a "Read the full brief" toggle -- and a footer bar linking out to
+the original source. Both fonts are loaded via `src/lib/cardFonts.ts` and
+scoped to the card itself (as CSS variables on its root element), so the
+rest of the app stays on Times New Roman. Patterns/quality score still
+show on the entry detail page -- just not on the card face, to keep it
+clean.
 
-"Read the full brief" expands **twist** and **why it matters** inline
-(no navigation) when curation found either; "Close" collapses it back.
-If an entry has neither, the same button just links to its detail page
-instead. `twist` is an optional one-sentence complication/caveat on the
-finding (curation is instructed to only fill it in when the source
-actually describes one, never invent one to fill the field) -- see
-`src/lib/curate.ts`.
+"Read the full brief" expands **twist** and **ground truth** (the
+`whyItMatters` field) inline, as a label/value grid, when curation found
+either; "Close" collapses it back. If an entry has neither, the same
+button just links to its detail page instead. `twist` is an optional
+one-sentence complication/caveat on the finding (curation is instructed
+to only fill it in when the source actually describes one, never invent
+one to fill the field) -- see `src/lib/curate.ts`.
 
 ### Why mutations are plain `fetch`, not Server Actions
 

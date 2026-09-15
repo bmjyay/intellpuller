@@ -146,8 +146,8 @@ function ToggleButton({
   const styles =
     tone === "dark"
       ? active
-        ? "border-white bg-white/15 text-white"
-        : "border-white/30 bg-white/5 text-white/70 hover:border-white hover:text-white"
+        ? "border-[#b68235] bg-[#b68235]/20 text-[#facb8d]"
+        : "border-[#b68235]/55 bg-transparent text-[#facb8d]/90 hover:border-[#b68235] hover:bg-[#b68235]/12"
       : active
         ? "border-brand-accent bg-brand-accent/10 text-brand-ink"
         : "border-brand-muted/30 bg-white text-brand-muted hover:border-brand-accent hover:text-brand-ink";

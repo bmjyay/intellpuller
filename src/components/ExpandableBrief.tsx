@@ -9,7 +9,36 @@ type Props = {
   whyItMatters?: string | null;
 };
 
-// "Read the full brief" either expands the twist/why-it-matters context
+const TEXT = "#201f1d";
+const DIVIDER = "rgba(32, 31, 29, 0.16)";
+
+const toggleClass =
+  "mt-auto block w-full rounded-sm border py-2.5 text-center text-[11px] uppercase transition hover:bg-[#b68235]/10 hover:border-[#b68235]/45";
+const toggleStyle: React.CSSProperties = {
+  fontFamily: "var(--font-heading)",
+  fontWeight: 600,
+  letterSpacing: "0.14em",
+  color: "#7d5411",
+  borderColor: DIVIDER,
+};
+
+function Field({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid gap-3.5" style={{ gridTemplateColumns: "74px 1fr" }}>
+      <div
+        className="pt-1 text-right text-[10.5px] uppercase"
+        style={{ fontFamily: "var(--font-heading)", fontWeight: 600, letterSpacing: "0.14em", color: "#7d5411" }}
+      >
+        {label}
+      </div>
+      <p className="text-[14.5px] leading-[1.62]" style={{ fontFamily: "var(--font-body)", color: TEXT }}>
+        {value}
+      </p>
+    </div>
+  );
+}
+
+// "Read the full brief" either expands the twist/ground-truth context
 // inline (when there's something to expand) or, if curation didn't find
 // either, just links to the entry's own detail page.
 export default function ExpandableBrief({ entryId, twist, whyItMatters }: Props) {
@@ -18,10 +47,7 @@ export default function ExpandableBrief({ entryId, twist, whyItMatters }: Props)
 
   if (!hasMore) {
     return (
-      <Link
-        href={`/entries/${entryId}`}
-        className="mt-auto rounded-md border border-brand-muted/40 px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-muted transition hover:border-brand-ink hover:text-brand-ink"
-      >
+      <Link href={`/entries/${entryId}`} className={toggleClass} style={toggleStyle}>
         Read the full brief
       </Link>
     );
@@ -30,26 +56,12 @@ export default function ExpandableBrief({ entryId, twist, whyItMatters }: Props)
   return (
     <>
       {open && (
-        <div className="flex flex-col gap-2 border-t border-brand-muted/15 pt-3 text-xs leading-relaxed text-brand-muted">
-          {twist && (
-            <p>
-              <span className="font-semibold uppercase tracking-wide text-brand-ink/70">Twist. </span>
-              {twist}
-            </p>
-          )}
-          {whyItMatters && (
-            <p>
-              <span className="font-semibold uppercase tracking-wide text-brand-ink/70">Why it matters. </span>
-              {whyItMatters}
-            </p>
-          )}
+        <div className="mt-4 flex flex-col gap-4 border-t pt-4" style={{ borderColor: DIVIDER }}>
+          {twist && <Field label="Twist" value={twist} />}
+          {whyItMatters && <Field label="Ground truth" value={whyItMatters} />}
         </div>
       )}
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="mt-auto rounded-md border border-brand-muted/40 px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-muted transition hover:border-brand-ink hover:text-brand-ink"
-      >
+      <button type="button" onClick={() => setOpen((v) => !v)} className={toggleClass} style={toggleStyle}>
         {open ? "Close" : "Read the full brief"}
       </button>
     </>
