@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { EntryStatus } from "@/lib/enums";
+import NavDropdown from "./NavDropdown";
 
 export default async function Header() {
   const pendingCount = await prisma.entry.count({ where: { status: EntryStatus.PENDING } });
@@ -17,11 +18,20 @@ export default async function Header() {
           <NavLink href="/review">
             Review queue{pendingCount > 0 ? ` (${pendingCount})` : ""}
           </NavLink>
-          <NavLink href="/liked">Liked</NavLink>
-          <NavLink href="/archive">Archive</NavLink>
-          <NavLink href="/add">Add entry</NavLink>
-          <NavLink href="/assistant">Assistant</NavLink>
-          <NavLink href="/sources">Sources</NavLink>
+          <NavDropdown
+            label="Library"
+            items={[
+              { href: "/liked", label: "Liked" },
+              { href: "/archive", label: "Archive" },
+            ]}
+          />
+          <NavDropdown
+            label="Manage"
+            items={[
+              { href: "/add", label: "Add entry" },
+              { href: "/sources", label: "Sources" },
+            ]}
+          />
         </nav>
       </div>
     </header>

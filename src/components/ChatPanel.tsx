@@ -65,7 +65,7 @@ export default function ChatPanel() {
   }
 
   return (
-    <div className="flex h-[70vh] flex-col rounded-xl border border-brand-muted/25 bg-white shadow-sm">
+    <div className="flex h-full min-h-0 flex-col">
       <div className="flex items-center justify-between border-b border-brand-muted/20 px-4 py-3">
         <p className="text-sm text-brand-muted">Grounded only in entries already in the corpus.</p>
         <label className="flex items-center gap-1.5 text-xs text-brand-ink/80">
