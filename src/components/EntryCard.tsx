@@ -3,9 +3,20 @@ import type { EntryWithRelations } from "@/lib/types";
 import { estimateReadTime } from "@/lib/readtime";
 import { DOMAIN_LABELS } from "@/lib/domains";
 import type { Domain } from "@/lib/enums";
+import { cardHeading, cardBody } from "@/lib/cardFonts";
 import EntryActionBar from "./EntryActionBar";
 import ExpandableBrief from "./ExpandableBrief";
 import StatusPill from "./StatusPill";
+
+// "Classical" card design (Research Card, variant 1c) with a dark navy
+// finish in place of its original near-black header.
+const HEADER_BG = "#141a2c";
+const HEADER_TITLE = "#f6f4f1";
+const HEADER_BYLINE = "rgba(243, 242, 242, 0.62)";
+const ACCENT = "#b68235";
+const ACCENT_300 = "#facb8d";
+const TEXT = "#201f1d";
+const DIVIDER = "rgba(32, 31, 29, 0.16)";
 
 function formatYear(d: Date | null): string | null {
   return d ? new Intl.DateTimeFormat("en-US", { year: "numeric" }).format(d) : null;
@@ -25,24 +36,44 @@ export default function EntryCard({ entry }: { entry: EntryWithRelations }) {
   const used = !!entry.usedAt;
   const eyebrow = ["Evidence", ...DOMAIN_LABELS[entry.domain as Domain].split(" / ")].join(" · ");
 
+  const dropCap = entry.finding.slice(0, 1);
+  const findingRest = entry.finding.slice(1);
+
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-brand-muted/20 bg-white shadow-sm transition hover:shadow-lg">
-      {/* Header -- a fixed min-height + clamped title keeps every card in a
-          row breaking at the same point, regardless of title length. */}
-      <div className="flex min-h-[13rem] flex-col bg-brand-primary px-5 pb-4 pt-5">
+    <article
+      className={`${cardHeading.variable} ${cardBody.variable} group flex h-full flex-col overflow-hidden rounded border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl`}
+      style={{ borderColor: DIVIDER, borderRadius: 4 }}
+    >
+      {/* Header */}
+      <header className="px-7 pb-[22px] pt-6" style={{ background: HEADER_BG }}>
         <div className="flex items-start justify-between gap-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white/60">{eyebrow}</p>
-          {entry.status !== "APPROVED" && <StatusPill status={entry.status} />}
+          <p
+            className="text-[10px] uppercase"
+            style={{ fontFamily: "var(--font-body)", letterSpacing: "0.2em", color: ACCENT_300 }}
+          >
+            {eyebrow}
+          </p>
+          <div className="flex flex-none items-center gap-2">
+            {entry.status !== "APPROVED" && <StatusPill status={entry.status} />}
+            <EntryActionBar id={entry.id} status={entry.status} liked={entry.liked} used={used} variant="card" tone="dark" />
+          </div>
         </div>
 
         <Link
           href={`/entries/${entry.id}`}
-          className="mt-2.5 block line-clamp-2 font-serif text-xl font-bold leading-snug text-white decoration-white/40 hover:underline"
+          className="mt-4 block leading-[1.1] hover:underline"
+          style={{
+            fontFamily: "var(--font-heading)",
+            fontWeight: 300,
+            fontSize: 34,
+            letterSpacing: "-0.01em",
+            color: HEADER_TITLE,
+          }}
         >
           {entry.title}
         </Link>
 
-        <p className="mt-2 text-xs text-white/60">
+        <p className="mt-3.5 text-xs" style={{ fontFamily: "var(--font-body)", color: HEADER_BYLINE }}>
           {[year, entry.publication && <em key="pub">{entry.publication}</em>, entry.org]
             .filter(Boolean)
             .map((part, i) => (
@@ -53,39 +84,51 @@ export default function EntryCard({ entry }: { entry: EntryWithRelations }) {
             ))}
           {" · "}~{readMins} min brief
         </p>
-
-        <div className="mt-auto pt-3">
-          <EntryActionBar id={entry.id} status={entry.status} liked={entry.liked} used={used} variant="card" tone="dark" />
-        </div>
-      </div>
+      </header>
 
       {/* Body */}
-      <div className="flex flex-1 flex-col gap-3 px-5 py-4">
+      <div className="flex flex-1 flex-col px-7 pt-6 pb-6">
         {entry.authors && (
-          <>
-            <p className="text-xs text-brand-muted">{entry.authors}</p>
-            <hr className="border-brand-muted/15" />
-          </>
+          <p className="text-xs" style={{ fontFamily: "var(--font-body)", color: "rgba(32, 31, 29, 0.52)" }}>
+            {entry.authors}
+          </p>
         )}
+        <hr className="my-4" style={{ borderColor: DIVIDER }} />
 
-        <p className={`text-sm leading-relaxed text-brand-ink/90 ${used ? "line-through decoration-brand-muted" : ""}`}>
-          {entry.finding}
+        <p
+          className={`text-[15px] leading-[1.68] ${used ? "line-through" : ""}`}
+          style={{ fontFamily: "var(--font-body)", color: TEXT, textDecorationColor: "rgba(32, 31, 29, 0.4)" }}
+        >
+          <span
+            aria-hidden="true"
+            className="float-left mr-2.5 mt-1"
+            style={{ fontFamily: "var(--font-heading)", fontWeight: 400, fontSize: 44, lineHeight: 0.82, color: ACCENT }}
+          >
+            {dropCap}
+          </span>
+          {findingRest}
         </p>
 
         <ExpandableBrief entryId={entry.id} twist={entry.twist} whyItMatters={entry.whyItMatters} />
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t border-brand-muted/15 bg-brand-bg px-5 py-2.5">
+      <div className="flex items-center justify-between gap-3 px-7 py-3.5" style={{ borderTop: `1px solid ${DIVIDER}` }}>
         <a
           href={entry.url}
           target="_blank"
           rel="noreferrer"
-          className="text-[11px] font-semibold uppercase tracking-wide text-brand-muted underline decoration-brand-muted/40 underline-offset-2 transition hover:text-brand-ink"
+          className="hover:underline"
+          style={{ fontFamily: "var(--font-body)", fontSize: 12.5, color: TEXT }}
         >
           Source
         </a>
-        <span className="text-[10px] font-medium uppercase tracking-wide text-brand-muted/70">{hostname(entry.url)}</span>
+        <span
+          className="text-[11px] uppercase"
+          style={{ fontFamily: "var(--font-body)", letterSpacing: "0.06em", color: "rgba(32, 31, 29, 0.42)" }}
+        >
+          {hostname(entry.url)}
+        </span>
       </div>
     </article>
   );
