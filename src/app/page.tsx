@@ -7,21 +7,23 @@ import EntryCard from "@/components/EntryCard";
 
 export const dynamic = "force-dynamic";
 
-type SearchParams = { domain?: string; q?: string; sort?: string; pattern?: string; hideUsed?: string };
+type SearchParams = { domain?: string; q?: string; sort?: string; pattern?: string };
 
 export default async function DashboardPage({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const { domain, q, sort, pattern, hideUsed } = await searchParams;
+  const { domain, q, sort, pattern } = await searchParams;
 
+  // Used entries have their own home (Manage > Used) -- the live feed
+  // never shows them, so there's no "hide used" toggle to manage here.
   const where = buildEntryWhere({
     status: EntryStatus.APPROVED,
     domain,
     pattern,
     q,
-    used: hideUsed === "true" ? "hide" : undefined,
+    used: "hide",
   });
 
   const entries = await prisma.entry.findMany({
@@ -59,7 +61,7 @@ export default async function DashboardPage({
         </div>
       </div>
 
-      <FilterBar domain={domain} q={q} sort={sort} pattern={pattern} hideUsed={hideUsed === "true"} />
+      <FilterBar domain={domain} q={q} sort={sort} pattern={pattern} showUsedToggle={false} />
 
       {entries.length === 0 ? (
         <p className="rounded-xl border border-dashed border-brand-muted/30 p-10 text-center text-sm text-brand-muted">
