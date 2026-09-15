@@ -29,6 +29,7 @@ export default async function Header() {
             label="Manage"
             items={[
               { href: "/add", label: "Add entry" },
+              { href: "/used", label: "Used" },
               { href: "/sources", label: "Sources" },
             ]}
           />

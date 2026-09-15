@@ -87,15 +87,17 @@ shows a real error message if a request does fail.
 
 The header keeps only the two most-used destinations as direct links, with
 everything else grouped under two dropdowns (**Library**: Liked/Archive;
-**Manage**: Add entry/Sources) so the nav doesn't sprawl as pages get added.
+**Manage**: Add entry/Used/Sources) so the nav doesn't sprawl as pages get
+added.
 
 | Page | What it's for |
 |---|---|
-| `/` | The live feed -- approved entries, filterable by domain/search/pattern, sortable, with a "hide used" toggle. |
+| `/` | The live feed -- approved entries, filterable by domain/search/pattern, sortable. Used entries never appear here (see `/used`). |
 | `/review` | Pending entries pulled by automation (or added manually), waiting on a human approve/reject. |
 | `/liked` (Library) | Entries starred as interesting -- a shortlist to draft briefs from, across any status. |
 | `/archive` (Library) | Rejected and retired-approved entries -- kept (not deleted) so nothing gets re-ingested and re-reviewed from scratch, and can be restored. |
 | `/add` (Manage) | Paste a URL, get it fetched + curated, land in the review queue. |
+| `/used` (Manage) | Entries marked used (already worked into a brief) -- pulled off the live feed automatically; unmark one here to send it back. |
 | `/sources` (Manage) | What's configured to pull automatically, plus a manual "run ingestion now". |
 | `/entries/:id` | Full detail + inline edit + approve/reject/archive/delete. |
 
