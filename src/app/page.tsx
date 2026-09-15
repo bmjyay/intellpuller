@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { EntryStatus } from "@/lib/enums";
 import { prisma } from "@/lib/db";
 import { buildEntryWhere } from "@/lib/entryQuery";
@@ -32,18 +33,30 @@ export default async function DashboardPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-brand-ink">Feed</h1>
-        <p className="mt-1 text-sm text-brand-muted">
-          Exceptional, human-reviewed research and reporting on how AI affects trust, cognition,
-          labor, and security.
-          {pattern && (
-            <>
-              {" "}
-              Filtered to pattern <span className="font-medium text-brand-ink/80">&ldquo;{pattern}&rdquo;</span>.
-            </>
-          )}
-        </p>
+      <div className="relative h-56 overflow-hidden rounded-2xl sm:h-64">
+        <Image
+          src="/images/dashboard-hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1152px) 1152px, 100vw"
+          className="object-cover object-[center_90%]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/90 via-brand-ink/10 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 p-6">
+          <h1 className="font-serif text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            Exceptional AI research, curated
+          </h1>
+          <p className="mt-1 max-w-2xl text-sm text-white/80">
+            Human-reviewed findings on how AI affects trust, cognition, labor, and security.
+            {pattern && (
+              <>
+                {" "}
+                Filtered to pattern <span className="font-medium text-white">&ldquo;{pattern}&rdquo;</span>.
+              </>
+            )}
+          </p>
+        </div>
       </div>
 
       <FilterBar domain={domain} q={q} sort={sort} pattern={pattern} hideUsed={hideUsed === "true"} />
@@ -53,9 +66,9 @@ export default async function DashboardPage({
           No approved entries match these filters yet. Check the review queue, or add one directly.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {entries.map((entry) => (
-            <EntryCard key={entry.id} entry={entry} />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {entries.map((entry, i) => (
+            <EntryCard key={entry.id} entry={entry} index={i + 1} />
           ))}
         </div>
       )}

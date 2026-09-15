@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import ChatPanel from "./ChatPanel";
 
 // A floating chat launcher, present on every page, so the assistant is
-// reachable without spending a nav slot on it. Styled like the Andus
-// icon mark -- a solid dark circle -- with a chat glyph instead of the
-// "a" mark.
+// reachable without spending a nav slot on it. Styled after the Andus
+// icon mark (a dark square with the white "a") with a slow spiral-ring
+// flourish behind it, echoing the brand's swirl artwork.
 export default function AssistantWidget() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -57,34 +57,44 @@ export default function AssistantWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close assistant" : "Open assistant"}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-ink text-white shadow-lg transition hover:bg-brand-primary hover:scale-105"
+        className="group relative flex h-16 w-16 items-center justify-center"
       >
-        {open ? <CloseIcon /> : <ChatIcon />}
+        {/* Spiral-ring flourish -- a slow-spinning conic gradient, nodding to
+            the brand's swirl artwork without redrawing it at icon scale. */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 rounded-full opacity-70 transition group-hover:opacity-100"
+          style={{
+            background:
+              "conic-gradient(from 0deg, transparent 0%, #7884FF 12%, transparent 28%, transparent 50%, #FF4F01 62%, transparent 78%)",
+            animation: "spin-slow 6s linear infinite",
+          }}
+        />
+        <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-brand-ink shadow-lg transition group-hover:bg-brand-primary">
+          {open ? <CloseIcon light /> : <AndusMark />}
+        </span>
       </button>
     </div>
   );
 }
 
-function ChatIcon() {
+function AndusMark() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5H9l-4 4v-4H5.5C4.67 16 4 15.33 4 14.5v-9Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <text x="12" y="12.5" textAnchor="middle" dominantBaseline="middle" fontSize="9" fontWeight="700" fill="currentColor">
-        ?
-      </text>
-    </svg>
+    <span className="flex h-6 w-6 items-center justify-center rounded-[6px] border border-white/70">
+      <span className="font-serif text-sm font-bold leading-none text-white">a</span>
+    </span>
   );
 }
 
-function CloseIcon() {
+function CloseIcon({ light }: { light?: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <svg width={light ? 20 : 18} height={light ? 20 : 18} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke={light ? "white" : "currentColor"}
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }

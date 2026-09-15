@@ -16,6 +16,12 @@ body {
   background-color: #dcd6f7; /* Periwinkle */
 }
 
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @layer components {
   .input {
     @apply rounded-md border border-brand-muted/30 bg-white px-3 py-1.5 text-sm text-brand-ink outline-none focus:border-brand-accent;

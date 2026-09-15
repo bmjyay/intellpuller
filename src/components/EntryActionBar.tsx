@@ -14,6 +14,9 @@ type Props = {
   // (just the like/used toggles -- status changes happen from the detail
   // page or review queue, not inline on a browsing card).
   variant?: "full" | "compact" | "card";
+  // "light" (default) reads on a white surface. "dark" reads on the
+  // card's dark header band -- same toggles, an outline-on-dark treatment.
+  tone?: "light" | "dark";
 };
 
 // Every mutation here hits the plain REST API (`/api/entries/:id`) over
@@ -21,7 +24,7 @@ type Props = {
 // enforce an Origin-header match that a lot of internal-tool hosting setups
 // (tunnels, reverse proxies, preview URLs) break silently, which is why the
 // buttons on this page used to just... do nothing.
-export default function EntryActionBar({ id, status, liked, used, variant = "full" }: Props) {
+export default function EntryActionBar({ id, status, liked, used, variant = "full", tone = "light" }: Props) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -79,6 +82,7 @@ export default function EntryActionBar({ id, status, liked, used, variant = "ful
         <ToggleButton
           active={liked}
           busy={isBusy("liked")}
+          tone={tone}
           activeTitle="Liked -- click to remove"
           idleTitle="Like"
           onClick={() => patch({ liked: !liked }, "liked")}
@@ -88,6 +92,7 @@ export default function EntryActionBar({ id, status, liked, used, variant = "ful
         <ToggleButton
           active={used}
           busy={isBusy("used")}
+          tone={tone}
           activeTitle="Used -- click to unmark"
           idleTitle="Mark used"
           onClick={() => patch({ used: !used }, "used")}
@@ -124,6 +129,7 @@ export default function EntryActionBar({ id, status, liked, used, variant = "ful
 function ToggleButton({
   active,
   busy,
+  tone = "light",
   activeTitle,
   idleTitle,
   onClick,
@@ -131,11 +137,21 @@ function ToggleButton({
 }: {
   active: boolean;
   busy: boolean;
+  tone?: "light" | "dark";
   activeTitle: string;
   idleTitle: string;
   onClick: () => void;
   children: React.ReactNode;
 }) {
+  const styles =
+    tone === "dark"
+      ? active
+        ? "border-white bg-white/15 text-white"
+        : "border-white/30 bg-white/5 text-white/70 hover:border-white hover:text-white"
+      : active
+        ? "border-brand-accent bg-brand-accent/10 text-brand-ink"
+        : "border-brand-muted/30 bg-white text-brand-muted hover:border-brand-accent hover:text-brand-ink";
+
   return (
     <button
       type="button"
@@ -144,11 +160,7 @@ function ToggleButton({
       title={active ? activeTitle : idleTitle}
       aria-pressed={active}
       aria-label={active ? activeTitle : idleTitle}
-      className={`flex h-8 w-8 items-center justify-center rounded-md border transition disabled:opacity-50 ${
-        active
-          ? "border-brand-accent bg-brand-accent/10 text-brand-ink"
-          : "border-brand-muted/30 bg-white text-brand-muted hover:border-brand-accent hover:text-brand-ink"
-      }`}
+      className={`flex h-8 w-8 items-center justify-center rounded-md border transition disabled:opacity-50 ${styles}`}
     >
       {children}
     </button>
