@@ -37,12 +37,12 @@ export default async function DashboardPage({
     <div className="flex flex-col gap-6">
       <div className="relative h-56 overflow-hidden rounded-2xl sm:h-64">
         <Image
-          src="/images/dashboard-hero.jpg"
+          src="/images/dashboardbackdrop.png"
           alt=""
           fill
           priority
           sizes="(min-width: 1152px) 1152px, 100vw"
-          className="object-cover object-[center_90%]"
+          className="object-cover object-[center_40%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/90 via-brand-ink/10 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 p-6">
