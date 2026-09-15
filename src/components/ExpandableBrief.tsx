@@ -24,10 +24,10 @@ const toggleStyle: React.CSSProperties = {
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
-    <div className="grid gap-3.5" style={{ gridTemplateColumns: "74px 1fr" }}>
+    <div className="grid gap-3.5" style={{ gridTemplateColumns: "92px 1fr" }}>
       <div
-        className="pt-1 text-right text-[10.5px] uppercase"
-        style={{ fontFamily: "var(--font-heading)", fontWeight: 600, letterSpacing: "0.14em", color: "#7d5411" }}
+        className="break-words pt-1 text-right text-[10.5px] uppercase"
+        style={{ fontFamily: "var(--font-heading)", fontWeight: 600, letterSpacing: "0.08em", color: "#7d5411" }}
       >
         {label}
       </div>
@@ -58,7 +58,7 @@ export default function ExpandableBrief({ entryId, twist, whyItMatters }: Props)
       {open && (
         <div className="mt-4 flex flex-col gap-4 border-t pt-4" style={{ borderColor: DIVIDER }}>
           {twist && <Field label="Twist" value={twist} />}
-          {whyItMatters && <Field label="Ground truth" value={whyItMatters} />}
+          {whyItMatters && <Field label="Walkthrough" value={whyItMatters} />}
         </div>
       )}
       <button type="button" onClick={() => setOpen((v) => !v)} className={toggleClass} style={toggleStyle}>
