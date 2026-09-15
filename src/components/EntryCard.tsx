@@ -3,8 +3,8 @@ import type { EntryWithRelations } from "@/lib/types";
 import { estimateReadTime } from "@/lib/readtime";
 import { DOMAIN_LABELS } from "@/lib/domains";
 import type { Domain } from "@/lib/enums";
-import PatternPill from "./PatternPill";
 import EntryActionBar from "./EntryActionBar";
+import ExpandableBrief from "./ExpandableBrief";
 import StatusPill from "./StatusPill";
 
 function formatYear(d: Date | null): string | null {
@@ -21,7 +21,7 @@ function hostname(url: string): string {
 
 export default function EntryCard({ entry }: { entry: EntryWithRelations }) {
   const year = formatYear(entry.publishedAt);
-  const readMins = estimateReadTime(entry.finding, entry.whyItMatters);
+  const readMins = estimateReadTime(entry.finding, entry.twist, entry.whyItMatters);
   const used = !!entry.usedAt;
   const eyebrow = ["Evidence", ...DOMAIN_LABELS[entry.domain as Domain].split(" / ")].join(" · ");
 
@@ -72,27 +72,7 @@ export default function EntryCard({ entry }: { entry: EntryWithRelations }) {
           {entry.finding}
         </p>
 
-        {entry.whyItMatters && (
-          <p className="text-xs leading-relaxed text-brand-muted">
-            <span className="font-semibold text-brand-ink/70">Why it matters. </span>
-            {entry.whyItMatters}
-          </p>
-        )}
-
-        {entry.patterns.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {entry.patterns.map((p) => (
-              <PatternPill key={p.id} name={p.name} />
-            ))}
-          </div>
-        )}
-
-        <Link
-          href={`/entries/${entry.id}`}
-          className="mt-auto rounded-md border border-brand-muted/40 px-4 py-2 text-center text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-muted transition group-hover:border-brand-ink group-hover:text-brand-ink"
-        >
-          Read the full brief
-        </Link>
+        <ExpandableBrief entryId={entry.id} twist={entry.twist} whyItMatters={entry.whyItMatters} />
       </div>
 
       {/* Footer */}

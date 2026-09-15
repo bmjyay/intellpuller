@@ -14,6 +14,7 @@ type Props = {
   domain: string;
   qualityScore: number | "";
   finding: string;
+  twist: string;
   whyItMatters: string;
 };
 
@@ -45,6 +46,7 @@ export default function EditEntryForm(props: Props) {
           domain: values.domain,
           qualityScore: values.qualityScore === "" ? null : Number(values.qualityScore),
           finding: values.finding,
+          twist: values.twist,
           whyItMatters: values.whyItMatters,
         }),
       });
@@ -103,6 +105,10 @@ export default function EditEntryForm(props: Props) {
 
       <Field label="Finding">
         <textarea value={values.finding} onChange={(e) => set("finding", e.target.value)} rows={3} className="input" required />
+      </Field>
+
+      <Field label="Twist (optional)">
+        <textarea value={values.twist} onChange={(e) => set("twist", e.target.value)} rows={2} className="input" />
       </Field>
 
       <Field label="Why it matters (optional)">

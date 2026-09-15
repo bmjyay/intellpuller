@@ -51,6 +51,7 @@ model Entry {
   publishedAt  DateTime?
   domain       String    @default("OTHER") // see src/lib/enums.ts Domain
   finding      String // the 1-2 sentence core finding
+  twist        String? // optional complicating nuance/caveat on the finding
   whyItMatters String? // optional editorial context on relevance
   status       String    @default("PENDING") // see src/lib/enums.ts EntryStatus
   qualityScore Int? // 1-5, from LLM curation or human override

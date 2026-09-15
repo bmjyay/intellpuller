@@ -11,6 +11,7 @@ export type CurationResult = {
   publication?: string;
   domain: Domain;
   finding: string;
+  twist?: string;
   whyItMatters?: string;
   qualityScore: number; // 1-5
   credibleFlag: boolean;
@@ -34,11 +35,15 @@ with a method (experiment, field study, formal model, large survey) over opinion
 
 Given raw text about one paper/article/report, extract clean metadata and a tight editorial \
 summary by calling the submit_curation tool. Keep "finding" to 1-2 sentences of the actual \
-result (not the topic). "whyItMatters" is optional -- only include it if there's a genuine \
-editorial angle (a tension with other findings, a notable admission, a strong complement to a \
-known pattern); leave it empty rather than restating the finding. qualityScore is 1-5: 5 = \
-publish immediately, 1 = do not surface to the team. credibleFlag should be false for content \
-that is marketing, unsourced, or otherwise not credible enough to trust without a second look.`;
+result (not the topic). "twist" is optional -- a single sentence naming a genuine complication \
+in the finding (an effect that reverses under some condition, a result that only holds for part \
+of the sample, a null result where one was expected); only include it if the source actually \
+describes one, never invent one to fill the field. "whyItMatters" is optional -- only include it \
+if there's a genuine editorial angle (a tension with other findings, a notable admission, a \
+strong complement to a known pattern); leave it empty rather than restating the finding. \
+qualityScore is 1-5: 5 = publish immediately, 1 = do not surface to the team. credibleFlag should \
+be false for content that is marketing, unsourced, or otherwise not credible enough to trust \
+without a second look.`;
 
 const TOOL_NAME = "submit_curation";
 
@@ -55,6 +60,10 @@ function buildTool(existingPatternNames: string[]) {
         publication: { type: "string", description: "Venue, e.g. 'Science', 'NBER Working Paper', 'arXiv'." },
         domain: { type: "string", enum: ALL_DOMAINS },
         finding: { type: "string", description: "1-2 sentence core, specific finding." },
+        twist: {
+          type: "string",
+          description: "Optional: a genuine complicating nuance/caveat on the finding. Omit if none.",
+        },
         whyItMatters: { type: "string", description: "Optional editorial context. Omit if none." },
         qualityScore: { type: "integer", minimum: 1, maximum: 5 },
         credibleFlag: { type: "boolean" },
@@ -121,6 +130,7 @@ export async function curateCandidate(
     publication: input.publication ? String(input.publication) : candidate.publication,
     domain: (ALL_DOMAINS.includes(input.domain as Domain) ? input.domain : "OTHER") as Domain,
     finding: String(input.finding ?? ""),
+    twist: input.twist ? String(input.twist) : undefined,
     whyItMatters: input.whyItMatters ? String(input.whyItMatters) : undefined,
     qualityScore: clampScore(Number(input.qualityScore)),
     credibleFlag: Boolean(input.credibleFlag),
