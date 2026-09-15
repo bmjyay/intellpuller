@@ -30,7 +30,6 @@ export default function EntryCard({ entry }: { entry: EntryWithRelations }) {
           {entry.status !== "APPROVED" && <StatusPill status={entry.status} />}
         </div>
         <div className="flex items-center gap-2">
-          {entry.liked && <span title="Liked">♥</span>}
           <ScoreDots score={entry.qualityScore} />
         </div>
       </div>
