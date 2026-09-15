@@ -42,6 +42,20 @@ actually in the corpus.
   Cinerous / Tropical Indigo / Orange) as Tailwind tokens in
   `tailwind.config.ts` (`brand-bg`, `brand-ink`, `brand-primary`,
   `brand-accent`, `brand-periwinkle`, `brand-muted`, `brand-cta`).
+- **Dashboard hero**: `public/images/dashboard-hero.jpg` is a real Andus
+  Labs brand collage (sourced from the brand's Drive imagery, not a
+  placeholder) used as the banner atop the feed.
+
+### Card design
+
+Entry cards are an editorial layout, not a generic list item: a dark
+header band (title, eyebrow domain label, byline, like/used toggles) over
+a white body (finding, "why it matters," patterns, a "Read the full
+brief" link to the entry's detail page) and a footer bar linking out to
+the original source. The large serif numerals (small inline + a faint
+watermark in the header) are just the card's position in the current
+list -- a layout flourish, not real data -- so don't read anything into
+the specific number.
 
 ### Why mutations are plain `fetch`, not Server Actions
 

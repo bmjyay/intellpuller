@@ -42,9 +42,9 @@ export default async function LikedPage({ searchParams }: { searchParams: Promis
           Nothing liked yet -- hit the &ldquo;Like&rdquo; button on any entry to add it here.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {entries.map((entry) => (
-            <EntryCard key={entry.id} entry={entry} />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {entries.map((entry, i) => (
+            <EntryCard key={entry.id} entry={entry} index={i + 1} />
           ))}
         </div>
       )}
