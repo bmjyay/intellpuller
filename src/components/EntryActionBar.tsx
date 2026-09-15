@@ -79,17 +79,21 @@ export default function EntryActionBar({ id, status, liked, used, variant = "ful
         <ToggleButton
           active={liked}
           busy={isBusy("liked")}
-          activeLabel="♥ Liked"
-          idleLabel="♡ Like"
+          activeTitle="Liked -- click to remove"
+          idleTitle="Like"
           onClick={() => patch({ liked: !liked }, "liked")}
-        />
+        >
+          <BookmarkIcon filled={liked} />
+        </ToggleButton>
         <ToggleButton
           active={used}
           busy={isBusy("used")}
-          activeLabel="✓ Used"
-          idleLabel="Mark used"
+          activeTitle="Used -- click to unmark"
+          idleTitle="Mark used"
           onClick={() => patch({ used: !used }, "used")}
-        />
+        >
+          <DuplicateIcon />
+        </ToggleButton>
 
         {variant !== "card" && status !== EntryStatus.APPROVED && (
           <ActionButton kind="approve" busy={isBusy("approve")} onClick={() => patch({ status: EntryStatus.APPROVED }, "approve")}>
@@ -120,29 +124,76 @@ export default function EntryActionBar({ id, status, liked, used, variant = "ful
 function ToggleButton({
   active,
   busy,
-  activeLabel,
-  idleLabel,
+  activeTitle,
+  idleTitle,
   onClick,
+  children,
 }: {
   active: boolean;
   busy: boolean;
-  activeLabel: string;
-  idleLabel: string;
+  activeTitle: string;
+  idleTitle: string;
   onClick: () => void;
+  children: React.ReactNode;
 }) {
   return (
     <button
       type="button"
       disabled={busy}
       onClick={onClick}
-      className={`rounded-md border px-3 py-1.5 text-sm font-medium transition disabled:opacity-50 ${
+      title={active ? activeTitle : idleTitle}
+      aria-pressed={active}
+      aria-label={active ? activeTitle : idleTitle}
+      className={`flex h-8 w-8 items-center justify-center rounded-md border transition disabled:opacity-50 ${
         active
           ? "border-brand-accent bg-brand-accent/10 text-brand-ink"
-          : "border-brand-muted/30 bg-white text-brand-muted hover:border-brand-accent"
+          : "border-brand-muted/30 bg-white text-brand-muted hover:border-brand-accent hover:text-brand-ink"
       }`}
     >
-      {active ? activeLabel : idleLabel}
+      {children}
     </button>
+  );
+}
+
+function BookmarkIcon({ filled }: { filled: boolean }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M7 4.5C7 3.67 7.67 3 8.5 3h7c.83 0 1.5.67 1.5 1.5v15.7a.5.5 0 0 1-.78.42L12 16.6l-4.22 3.52A.5.5 0 0 1 7 19.7V4.5Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+        fill={filled ? "currentColor" : "none"}
+      />
+    </svg>
+  );
+}
+
+function DuplicateIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M10.5 3h5L19 6.5V15a1.3 1.3 0 0 1-1.3 1.3h-7.2A1.3 1.3 0 0 1 9.2 15V4.3A1.3 1.3 0 0 1 10.5 3Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path d="M15.5 3v3.5H19" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path
+        d="M6 8h5l3.5 3.5V19a1.3 1.3 0 0 1-1.3 1.3H6A1.3 1.3 0 0 1 4.7 19V9.3A1.3 1.3 0 0 1 6 8Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path d="M11 8v3.5h3.5" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path
+        d="M12 14.3H7.3m0 0 2-2m-2 2 2 2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
