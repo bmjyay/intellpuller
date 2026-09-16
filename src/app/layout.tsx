@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-brand-bg font-serif text-brand-ink antialiased">
+      <body className="min-h-screen bg-white font-serif text-brand-ink antialiased">
         <Header />
         <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
         <AssistantWidget />
