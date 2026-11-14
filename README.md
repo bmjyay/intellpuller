@@ -37,14 +37,8 @@ actually in the corpus.
   extracting metadata out of arbitrary article HTML when you add a URL by
   hand, and for the brief/citation assistant.
 - **Fonts/colors**: Times New Roman throughout (a system font, set in
-  `tailwind.config.ts` and `globals.css` -- no font download needed), and
-  the Andus Labs brand palette (Old Lace / Violet / Zaffre / Periwinkle /
-  Cinerous / Tropical Indigo / Orange) as Tailwind tokens in
-  `tailwind.config.ts` (`brand-bg`, `brand-ink`, `brand-primary`,
-  `brand-accent`, `brand-periwinkle`, `brand-muted`, `brand-cta`).
-- **Dashboard hero**: `public/images/dashboard-hero.jpg` is a real Andus
-  Labs brand collage (sourced from the brand's Drive imagery, not a
-  placeholder) used as the banner atop the feed.
+  `tailwind.config.ts` and `globals.css`
+
 
 ### Card design
 
